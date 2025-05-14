@@ -5,7 +5,7 @@ function mainmenu() {
             <button class="main-menu-btn">Sound</button>
             <button class="main-menu-btn">Background</button>
             <button class="main-menu-btn">About</button>
-            <button class="main-menu-btn">Leader Board</button>
+            <button class="main-menu-btn">Leaderboard</button>
         </menu>
         `);
 }
