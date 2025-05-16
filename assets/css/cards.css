@@ -1,0 +1,166 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    width: 1100px;
+    max-height: 1000px; 
+    margin: auto;
+    position: relative; /* Position the grid inside the container */
+}
+
+
+
+.card {
+    position: relative;
+    width: 100%; /* Adjust size as needed */
+    height: 140px; /* Adjust size as needed */
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    transition: transform 0.6s;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.card.flipped .card-back {
+    transform: rotateY(0deg);
+}
+
+
+
+
+/* sound css */
+
+.sound-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.sound-controls {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sound-controls h3 {
+    margin-bottom: 20px;
+}
+
+.sound-controls label {
+    display: block;
+    margin-bottom: 10px;
+    
+}
+.sound-controls label>span{
+    display: inline-block;
+    transform: translateY(-3px);
+}
+
+/* Style the volume slider */
+#volume-control {
+    width: 70%;
+    accent-color: rgb(0, 0, 255);
+}
+
+
+
+
+
+
+
+
+.sound-controls button{
+    width: 200px;
+    margin: 10px;
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sound-controls button:before {
+    content: "";
+    background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+.sound-controls button:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+
