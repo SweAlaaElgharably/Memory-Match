@@ -1,5 +1,3 @@
-
-
 function mainmenu() {
     $(".game").html(`
         <menu class="main-menu">
@@ -27,35 +25,81 @@ $(".game").on("click", ".start-game", startgamemenu);
 $(".game").on("click", ".back", mainmenu);
 
 
+    
+
+
 
 
 
 
 
   //render cards function with sound function
-$(".game").on("click", ".render-page", function () {
-    const buttonText = $(this).text(); // Get the text of the clicked button
+  $(".game").on("click", ".render-page", function () {
 
-    // Set parameters based on the button text
-    let columns, height,imageParameter;
-    if (buttonText === "Easy") {
+
+    // Create and add the back button to select the start menu
+    var backBtn = document.createElement("button");
+    backBtn.className = "main-menu-btn back-to-menu";
+    backBtn.textContent = "Back to Menu";
+    backBtn.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    `;
+    document.body.appendChild(backBtn);
+    // Add click handler for the back button
+    backBtn.addEventListener('click', function() {
+        // Remove the back button
+        backBtn.remove();
+        // Clear the game board
+        $(".container").empty();
+        // Show the level selection menu
+        mainmenu();
+    });
+
+    // Create and add the back button to select a level
+        var backBtn = document.createElement("button");
+        backBtn.className = "main-menu-btn back-to-menu";
+        backBtn.textContent = "Level Selection";
+        backBtn.style.cssText = `
+            position: fixed;
+            width: 204px;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+                                `;
+        document.body.appendChild(backBtn);
+        // Add click handler for the back button
+        backBtn.addEventListener('click', function() {
+            // Remove the back button
+            backBtn.remove();
+            // Clear the game board
+            $(".container").empty();
+            // Show the level selection menu
+            startgamemenu();
+        });
+
+    const buttonText = $(this).text();
+    let columns, height, imageParameter;
+    if (buttonText === "Easy") {    
         columns = 4; 
         height = 140;
         imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 8);
-        
     } else if (buttonText === "Normal") {
         columns = 6; 
         height = 120; 
         imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 18);
-       
     } else if (buttonText === "Difficult") {
         columns = 8; 
         height = 80;
-        imageParameter = cardsImages
+        imageParameter = cardsImages;
     }
 
-    // Call renderPage with the selected parameters
+
+    // Render the game
     renderPage(columns, height, imageParameter);
+
 });
 
 //$(".background").attr("src", "#");
