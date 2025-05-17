@@ -51,31 +51,31 @@ $(".game").on("click", ".back", mainmenu);
     // Add click handler for the back button
     backBtn.addEventListener('click', function() {
         // Remove the back button
+        console.log(backBtn)
         backBtn.remove();
+        backBtn1.remove();
         // Clear the game board
-        $(".container").empty();
+        $(".game").empty();
         // Show the level selection menu
         mainmenu();
     });
 
     // Create and add the back button to select a level
-        var backBtn = document.createElement("button");
-        backBtn.className = "main-menu-btn back-to-menu";
-        backBtn.textContent = "Level Selection";
-        backBtn.style.cssText = `
+        var backBtn1 = document.createElement("button");
+        backBtn1.className = "main-menu-btn back-to-menu";
+        backBtn1.textContent = "Level Selection";
+        backBtn1.style.cssText = `
             position: fixed;
             width: 204px;
             top: 20px;
             left: 20px;
             z-index: 1000;
                                 `;
-        document.body.appendChild(backBtn);
+        document.body.appendChild(backBtn1);
         // Add click handler for the back button
-        backBtn.addEventListener('click', function() {
+        backBtn1.addEventListener('click', function() {
             // Remove the back button
-            backBtn.remove();
-            // Clear the game board
-            $(".container").empty();
+            backBtn1.remove();
             // Show the level selection menu
             startgamemenu();
         });
@@ -111,7 +111,7 @@ $(".game").on("click", ".back", mainmenu);
 const bgAudio = new Audio('./assets/audio/The Avengers Theme Song.mp3');
 const flipAudio = new Audio('./assets/audio/flip-audio.wav');
 
-var container = document.getElementsByClassName("container");
+var container = document.getElementsByClassName("game");
 
 
 var backgroundImage = "./assets/images/marvel-back.jpeg";
@@ -153,6 +153,7 @@ var cardsImages = [
 
 
 function renderPage(columns, height, imageArr) {
+    console.log(container[0])
     if (!container[0]) return;
     container[0].innerHTML = '';
     container[0].style = '';
