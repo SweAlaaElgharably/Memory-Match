@@ -25,4 +25,3 @@ $(".game").on("click", ".start-game", startgamemenu);
 $(".game").on("click", ".back", mainmenu);
 
 
-//$(".background").attr("src", "#");
