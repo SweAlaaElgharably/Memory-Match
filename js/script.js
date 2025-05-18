@@ -41,15 +41,11 @@ var cardsImages = [
 ];
 
 function mainmenu() {
-    if (timerDisplay) {
-        timerDisplay.remove();
-        timerDisplay = null;
-    }
-    $(".game").html(`
+  $(".game").html(`
         <menu class="main-menu">
             <button class="main-menu-btn start-game">Start Game</button>
             <button class="main-menu-btn sound">Sound</button>
-            <button class="main-menu-btn">Background</button>
+            <button class="main-menu-btn background-btn">Background</button>
             <button class="main-menu-btn">About</button>
             <button class="main-menu-btn">Leaderboard</button>
         </menu>
@@ -58,11 +54,7 @@ function mainmenu() {
 mainmenu();
 
 function startgamemenu() {
-    if (timerDisplay) {
-        timerDisplay.remove();
-        timerDisplay = null;
-    }
-    $(".game").html(`
+  $(".game").html(`
         <menu class="main-menu">
              <button class="main-menu-btn render-page">Easy</button>
             <button class="main-menu-btn render-page">Normal</button>
@@ -71,27 +63,43 @@ function startgamemenu() {
         </menu>
     `);
 }
+function changeBG() {
+  $(".game").html(
+    `
+        <button class="main-menu-btn back">Back</button>
+        <menu class="main-menu">
+         <button class="main-menu-btn bg-function first-bg">
+         <img id="Changeimg" src="/Memory-Match/assets/images/bg.jpg" alt="">
+         </button>
+            <button class="main-menu-btn bg-function second-bg">
+                     <img id="Changeimg" src="/Memory-Match/assets/images/marvel.jpg" alt="">
+            </button>
+            <button class="main-menu-btn bg-function third-bg">
+                     <img id="Changeimg" src="/Memory-Match/assets/images/avengers.jpg" alt="">
+
+            </button>
+        </menu>
+        `
+  );
+}
+
+$(".game").on("click", ".bg-function", function () {
+  let img = $(this).find("img");
+  let src = img.attr("src");
+  document.body.style.backgroundImage = `url("${src}")`;
+});
+
 $(".game").on("click", ".start-game", startgamemenu);
 $(".game").on("click", ".back", mainmenu);
-
-
-
-
-
-
-
-
-
+$(".game").on("click", ".background-btn", changeBG);
 
 //render cards function with sound function
 $(".game").on("click", ".render-page", function () {
-
-
-    // Create and add the back button to select the start menu
-    var backBtn = document.createElement("button");
-    backBtn.className = "main-menu-btn back-to-menu";
-    backBtn.textContent = "Back to Menu";
-    backBtn.style.cssText = `
+  // Create and add the back button to select the start menu
+  var backBtn = document.createElement("button");
+  backBtn.className = "main-menu-btn back-to-menu";
+  backBtn.textContent = "Back to Menu";
+  backBtn.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
@@ -181,9 +189,8 @@ $(".game").on("click", ".render-page", function () {
     }
 
 
-    // Render the game
-    renderPage(columns, height, imageParameter);
-
+  // Render the game
+  renderPage(columns, height, imageParameter);
 });
 
 //$(".background").attr("src", "#");
@@ -330,10 +337,10 @@ let currentLevel = {
 };
 //galal
 function renderPage(columns, height, imageArr) {
-    console.log(container[0])
-    if (!container[0]) return;
-    container[0].innerHTML = '';
-    container[0].style = '';
+  console.log(container[0]);
+  if (!container[0]) return;
+  container[0].innerHTML = "";
+  container[0].style = "";
 
     //galal
     // Store current level info
@@ -376,7 +383,7 @@ function renderPage(columns, height, imageArr) {
     section.className = 'parent';
     section.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
-    const allImages = [...imageArr, ...imageArr,].sort(() => Math.random() - 0.5);
+  const allImages = [...imageArr, ...imageArr].sort(() => Math.random() - 0.5);
 
 
     allImages.forEach(image => {
@@ -389,13 +396,13 @@ function renderPage(columns, height, imageArr) {
         front.className = 'card-front';
         front.style = `width: 100%; height: 100%; background: url(${backgroundImage}) no-repeat center/cover;`;
 
-        const back = document.createElement('div');
-        back.className = 'card-back';
-        back.style = `width: 100%; height: 100%; background: url(${image}) no-repeat center/cover;`;
+    const back = document.createElement("div");
+    back.className = "card-back";
+    back.style = `width: 100%; height: 100%; background: url(${image}) no-repeat center/cover;`;
 
-        // Add the front and back to the card
-        div.appendChild(front);
-        div.appendChild(back);
+    // Add the front and back to the card
+    div.appendChild(front);
+    div.appendChild(back);
 
         // Modified click event for card flipping and matching
         div.addEventListener('click', function () {
@@ -441,10 +448,10 @@ function renderPage(columns, height, imageArr) {
             }
         });
 
-        section.appendChild(div);
-    });
+    section.appendChild(div);
+  });
 
-    container[0].appendChild(section);
+  container[0].appendChild(section);
 }
 
 //background voice add event listner
@@ -461,7 +468,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { once: true }); // Ensure this event listener runs only once
 });
 
-
 // event listener for the "Sound" button to show the overlay
 $(".game").on("click", ".sound", function () {
 
@@ -470,31 +476,33 @@ $(".game").on("click", ".sound", function () {
 
 // Function to show the sound overlay
 function showSoundOverlay() {
-    const overlay = document.createElement('div');
-    overlay.className = 'sound-overlay';
-    overlay.innerHTML = `
+  const overlay = document.createElement("div");
+  overlay.className = "sound-overlay";
+  overlay.innerHTML = `
         <div class="sound-controls">
             <h3>Sound Settings</h3>
-            <label><span>Volume:</span> <input type="range" id="volume-control" min="0" max="1" step="0.1" value="${bgAudio.volume}"></label>
-            <button id="mute-btn">${bgAudio.muted ? 'Unmute' : 'Mute'}</button>
+            <label><span>Volume:</span> <input type="range" id="volume-control" min="0" max="1" step="0.1" value="${
+              bgAudio.volume
+            }"></label>
+            <button id="mute-btn">${bgAudio.muted ? "Unmute" : "Mute"}</button>
             <button id="close-overlay">Close</button>
         </div>
     `;
-    document.body.appendChild(overlay);
+  document.body.appendChild(overlay);
 
-    // Add event listeners for the controls
-    document.getElementById('volume-control').addEventListener('input', (e) => {
-        bgAudio.volume = e.target.value;
-    });
+  // Add event listeners for the controls
+  document.getElementById("volume-control").addEventListener("input", (e) => {
+    bgAudio.volume = e.target.value;
+  });
 
-    document.getElementById('mute-btn').addEventListener('click', () => {
-        bgAudio.muted = !bgAudio.muted;
-        document.getElementById('mute-btn').textContent = bgAudio.muted ? 'Unmute' : 'Mute';
-    });
+  document.getElementById("mute-btn").addEventListener("click", () => {
+    bgAudio.muted = !bgAudio.muted;
+    document.getElementById("mute-btn").textContent = bgAudio.muted
+      ? "Unmute"
+      : "Mute";
+  });
 
-    document.getElementById('close-overlay').addEventListener('click', () => {
-        document.body.removeChild(overlay);
-    });
+  document.getElementById("close-overlay").addEventListener("click", () => {
+    document.body.removeChild(overlay);
+  });
 }
-
-
