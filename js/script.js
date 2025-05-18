@@ -10,9 +10,12 @@ let matchedPairs = 0;
 let moves = 0;
 let flippedCards = [];
 let canFlip = true;
-
-const bgAudio = new Audio("./assets/audio/The Avengers Theme Song.mp3");
-const flipAudio = new Audio("./assets/audio/flip-audio.wav");
+const sounds = {
+  correct: new Audio("./assets/audio/right-sound.wav"),
+  wrong: new Audio("./assets/audio/wrong-sound.mp3"),
+  bg: new Audio("./assets/audio/The Avengers Theme Song.mp3"),
+  flip: new Audio("./assets/audio/flip-audio.wav"),
+};
 var container = document.getElementsByClassName("game");
 var backgroundImage = "./assets/images/marvel-back.jpeg";
 var cardsImages = [
@@ -418,8 +421,8 @@ function renderPage(difficulty, imageArr) {
         return;
 
       div.classList.add("flipped");
-      flipAudio.currentTime = 0;
-      flipAudio.play();
+      sounds.flip.currentTime = 0;
+      sounds.flip.play();
 
       flippedCards.push(div);
 
@@ -435,9 +438,13 @@ function renderPage(difficulty, imageArr) {
           setTimeout(() => {
             card1.classList.add("matched");
             card2.classList.add("matched");
+           
             matchedPairs++;
             flippedCards = [];
             canFlip = true;
+            
+            sounds.correct.currentTime = 0;
+            sounds.correct.play();
 
             // Check if game is complete
             if (matchedPairs === currentLevel.images.length) {
@@ -452,6 +459,8 @@ function renderPage(difficulty, imageArr) {
             card2.classList.remove("flipped");
             flippedCards = [];
             canFlip = true;
+            sounds.wrong.currentTime = 0;
+            sounds.wrong.play();
           }, 1000);
         }
       }
@@ -469,9 +478,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener(
     "click",
     () => {
-      bgAudio.loop = true;
-      bgAudio.volume = 0.5;
-      bgAudio.play().catch((error) => {
+      sounds.bg.loop = true;
+      sounds.bg.volume = 0.5;
+      sounds.bg.play().catch((error) => {
         console.error("Audio playback failed:", error);
       });
     },
@@ -492,9 +501,9 @@ function showSoundOverlay() {
         <div class="sound-controls">
             <h3>Sound Settings</h3>
             <label><span>Volume:</span> <input type="range" id="volume-control" min="0" max="1" step="0.1" value="${
-              bgAudio.volume
+              sounds.bg.volume
             }"></label>
-            <button id="mute-btn">${bgAudio.muted ? "Unmute" : "Mute"}</button>
+            <button id="mute-btn">${sounds.bg.muted ? "Unmute" : "Mute"}</button>
             <button id="close-overlay">Close</button>
         </div>
     `;
@@ -502,12 +511,12 @@ function showSoundOverlay() {
 
   // Add event listeners for the controls
   document.getElementById("volume-control").addEventListener("input", (e) => {
-    bgAudio.volume = e.target.value;
+    sounds.bg.volume = e.target.value;
   });
 
   document.getElementById("mute-btn").addEventListener("click", () => {
-    bgAudio.muted = !bgAudio.muted;
-    document.getElementById("mute-btn").textContent = bgAudio.muted
+    sounds.bg.muted = !sounds.bg.muted;
+    document.getElementById("mute-btn").textContent = sounds.bg.muted
       ? "Unmute"
       : "Mute";
   });
