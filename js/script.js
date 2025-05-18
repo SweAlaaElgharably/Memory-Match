@@ -1,6 +1,12 @@
 let movesDisplay = null;
 let timerDisplay = null;
 let restartBtn = null;
+let gameTimer;
+let seconds = 0;
+let minutes = 0;
+let isGameActive = false;
+let totalCards = 0;
+let matchedPairs = 0;
 const bgAudio = new Audio("./assets/audio/The Avengers Theme Song.mp3");
 const flipAudio = new Audio("./assets/audio/flip-audio.wav");
 var container = document.getElementsByClassName("game");
@@ -226,12 +232,7 @@ function updateMoves() {
 }
 //galal
 // Add these variables at the top with your other variables
-let gameTimer;
-let seconds = 0;
-let minutes = 0;
-let isGameActive = false;
-let totalCards = 0;
-let matchedPairs = 0;
+
 // Function to update and display the timer
 function updateTimer() {
   if (!timerDisplay) {
