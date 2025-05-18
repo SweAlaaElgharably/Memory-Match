@@ -1,3 +1,4 @@
+import { mainmenu, startgamemenu } from "./mainmenu.js";
 import showSoundOverlay from "./sound.js";
 import { showLeaderBoard, saveScore } from "./leaderboard.js";
 
@@ -49,29 +50,7 @@ var cardsImages = [
     "./assets/images/wolvrine.jpg",
 ];
 
-// main menu function 
-function mainmenu() {
-    $(".game").html(`
-        <menu class="main-menu">
-            <button class="main-menu-btn start-game">Start Game</button>
-            <button class="main-menu-btn sound">Sound</button>
-            <button class="main-menu-btn">Background</button>
-            <button class="main-menu-btn">About</button>
-            <button class="main-menu-btn leaderboard">Leaderboard</button>
-        </menu>`);
-}
 mainmenu();
-
-// level menu function
-function startgamemenu() {
-    $(".game").html(`
-        <menu class="main-menu">
-            <button class="main-menu-btn render-page">Easy</button>
-            <button class="main-menu-btn render-page">Normal</button>
-            <button class="main-menu-btn render-page">Difficult</button>
-            <button class="main-menu-btn back">Back</button>
-        </menu>`);
-}
 $(".game").on("click", ".start-game", startgamemenu);
 $(".game").on("click", ".back", mainmenu);
 $(".game").on("click", ".leaderboard", showLeaderBoard);
