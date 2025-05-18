@@ -1,6 +1,7 @@
 import { mainmenu, startgamemenu } from "./mainmenu.js";
 import showSoundOverlay from "./sound.js";
 import { showLeaderBoard, saveScore } from "./leaderboard.js";
+import { changeBG } from "./background.js";
 
 // global variables
 const flipAudio = new Audio('./assets/audio/flip-audio.wav');
@@ -120,7 +121,6 @@ function resetTimer() {
 
 // Function to show game completion notification
 function showGameCompletion() {
-    console.log(level);
     saveScore(moves, $(".timer-display").text(), level);
     const notification = document.createElement('div');
     notification.className = 'game-completion';
@@ -224,6 +224,7 @@ $(".game").on("click", ".sound", function () {
     showSoundOverlay();
 });
 
-
+// background call
+$(".game").on("click", ".background-btn", changeBG);
 
 

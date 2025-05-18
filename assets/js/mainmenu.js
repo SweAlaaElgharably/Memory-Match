@@ -4,7 +4,7 @@ export function mainmenu() {
         <menu class="main-menu">
             <button class="main-menu-btn start-game">Start Game</button>
             <button class="main-menu-btn sound">Sound</button>
-            <button class="main-menu-btn">Background</button>
+            <button class="main-menu-btn background-btn">Background</button>
             <button class="main-menu-btn">About</button>
             <button class="main-menu-btn leaderboard">Leaderboard</button>
         </menu>`);
