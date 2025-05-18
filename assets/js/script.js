@@ -1,10 +1,8 @@
+import showSoundOverlay from "./sound.js";
+
 // global variables
-let movesDisplay = null;
-let timerDisplay = null;
-let restartBtn = null;
-const bgAudio = new Audio('./assets/audio/The Avengers Theme Song.mp3');
 const flipAudio = new Audio('./assets/audio/flip-audio.wav');
-var container = document.getElementsByClassName("game");
+var container = document.getElementsByClassName("game-body");
 var backgroundImage = "./assets/images/marvel-back.jpeg";
 let moves = 0;
 let flippedCards = [];
@@ -12,9 +10,9 @@ let canFlip = true;
 let gameTimer;
 let seconds = 0;
 let minutes = 0;
-let isGameActive = false;
 let totalCards = 0;
 let matchedPairs = 0;
+let currentLevel = {columns: 0, height: 0, images: []};
 var cardsImages = [
     "./assets/images/altron.jpg",
     "./assets/images/blackwidow.jpg",
@@ -80,25 +78,26 @@ $(".game").on("click", ".back", mainmenu);
 
 // game page function
 function gamePage() {
-    var navBar = document.createElement("div")
-    navBar.className = "nav-bar";
     $(".game").html('')
-    $(".game").append(navBar);
-    // Create back to menu button
-    var backBtn = document.createElement("button");
-    backBtn.className = "main-menu-btn back-to-menu";
-    backBtn.textContent = "Back to Menu";
-    // Create back to level button
-    var lvlBtn = document.createElement("button");
-    lvlBtn.className = "main-menu-btn back-to-menu";
-    lvlBtn.textContent = "Level Selection";
-    $(backBtn).on("click", () => {
+    $(".game").html(`<div class="nav-bar">
+                            <button class="main-menu-btn back-to-menu">Back to Menu</button>
+                            <div class="moves-display main-menu-btn">Moves: ${moves}</div>
+                            <div class="timer-display main-menu-btn">Time: 00:00</div>
+                            <button class="main-menu-btn back-to-level">Level Selection</button>
+                            <button class="main-menu-btn restart-btn">Restart Game</button>
+                        </div>
+                        <div class="game-body"></div>`);
+    $(".restart-btn").on("click", function () {
+        resetTimer();
+        startTimer();
+        renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
+    });
+    $(".back-to-menu").on("click", () => {
         mainmenu();
     });
-    $(lvlBtn).on("click", () => {
+    $(".back-to-level").on("click", () => {
         startgamemenu();
     })
-    $(".nav-bar").append(backBtn, lvlBtn)
     const buttonText = $(this).text();
     let columns, height, imageParameter;
     if (buttonText === "Easy") {
@@ -121,27 +120,15 @@ $(".game").on("click", ".render-page", gamePage);
 
 // moves function
 function updateMoves() {
-    // Create or update moves display
-    if (!movesDisplay) {
-        movesDisplay = document.createElement('div');
-        movesDisplay.className = 'moves-display main-menu-btn';
-        $(".nav-bar").append(movesDisplay);
-    }
-    movesDisplay.textContent = `Moves: ${moves}`;
+    $(".moves-display").text(`Moves: ${moves}`);
 }
 // Function to update and display the timer
 function updateTimer() {
-    if (!timerDisplay) {
-        timerDisplay = document.createElement('div');
-        timerDisplay.className = 'timer-display main-menu-btn';
-        $(".nav-bar").append(timerDisplay);
-    }
-    timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    $(".timer-display").text(`Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
 }
 
 // Function to start the timer
 function startTimer() {
-    isGameActive = true;
     gameTimer = setInterval(() => {
         seconds++;
         if (seconds === 60) {
@@ -152,15 +139,9 @@ function startTimer() {
     }, 1000);
 }
 
-// Function to stop the timer
-function stopTimer() {
-    clearInterval(gameTimer);
-    isGameActive = false;
-}
-
 // Function to reset the timer
 function resetTimer() {
-    stopTimer();
+    clearInterval(gameTimer);
     seconds = 0;
     minutes = 0;
     updateTimer();
@@ -170,20 +151,6 @@ function resetTimer() {
 function showGameCompletion() {
     const notification = document.createElement('div');
     notification.className = 'game-completion';
-    notification.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        z-index: 2000;
-        min-width: 300px;
-    `;
-
     notification.innerHTML = `
         <h2>Game Completed! 🎉</h2>
         <p>Your Score (Moves): ${moves}</p>
@@ -191,9 +158,7 @@ function showGameCompletion() {
         <button class="main-menu-btn restart-btn">Play Again</button>
         <button class="main-menu-btn menu-btn">Main Menu</button>
     `;
-
     document.body.appendChild(notification);
-
     // Add event listeners for the buttons
     notification.querySelector('.restart-btn').addEventListener('click', () => {
         notification.remove();
@@ -201,7 +166,6 @@ function showGameCompletion() {
         startTimer();
         renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
     });
-
     notification.querySelector('.menu-btn').addEventListener('click', () => {
         notification.remove();
         resetTimer();
@@ -209,16 +173,10 @@ function showGameCompletion() {
     });
 }
 
-// Store current level information
-let currentLevel = {
-    columns: 0,
-    height: 0,
-    images: []
-};
-
 // game render page
 function renderPage(columns, height, imageArr) {
     if (!container[0]) return;
+    $(container[0]).html('');
     currentLevel = {columns: columns, height: height, images: imageArr};
     // Reset game state
     moves = 0;
@@ -228,25 +186,6 @@ function renderPage(columns, height, imageArr) {
     updateMoves();
     resetTimer();
     startTimer();
-    // Create restart button
-    if (!restartBtn) {
-        restartBtn = document.createElement('button');
-        restartBtn.className = 'main-menu-btn restart-game-btn';
-        restartBtn.textContent = 'Restart Level';
-        restartBtn.style.cssText = `
-            position: fixed;
-            bottom: 750px;
-            left: 20px;
-            z-index: 1000;
-        `;
-        document.body.appendChild(restartBtn);
-
-        restartBtn.addEventListener('click', () => {
-            resetTimer();
-            startTimer();
-            renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
-        });
-    }
     // cards section
     const section = document.createElement('section');
     section.className = 'parent';
@@ -288,7 +227,7 @@ function renderPage(columns, height, imageArr) {
                         canFlip = true;
                         // Check if game is complete
                         if (matchedPairs === currentLevel.images.length) {
-                            stopTimer();
+                            clearInterval(gameTimer);
                             showGameCompletion();
                         }
                     }, 500);
@@ -308,47 +247,11 @@ function renderPage(columns, height, imageArr) {
     container[0].appendChild(section);
 }
 
-//background voice add event listner
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait for user interaction to play the audio
-    document.body.addEventListener('click', () => {
-        bgAudio.loop = true;
-        bgAudio.volume = 0.5;
-        bgAudio.play().catch((error) => {
-            console.error("Audio playback failed:", error);
-        });
-    }, { once: true }); // Ensure this event listener runs only once
-});
-
 // event listener for the "Sound" button to show the overlay
 $(".game").on("click", ".sound", function () {
     showSoundOverlay();
 });
 
-// Function to show the sound overlay
-function showSoundOverlay() {
-    const overlay = document.createElement('div');
-    overlay.className = 'sound-overlay';
-    overlay.innerHTML = `
-        <div class="sound-controls">
-            <h3>Sound Settings</h3>
-            <label><span>Volume:</span> <input type="range" id="volume-control" min="0" max="1" step="0.1" value="${bgAudio.volume}"></label>
-            <button id="mute-btn">${bgAudio.muted ? 'Unmute' : 'Mute'}</button>
-            <button id="close-overlay">Close</button>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-    // Add event listeners for the controls
-    document.getElementById('volume-control').addEventListener('input', (e) => {
-        bgAudio.volume = e.target.value;
-    });
-    document.getElementById('mute-btn').addEventListener('click', () => {
-        bgAudio.muted = !bgAudio.muted;
-        document.getElementById('mute-btn').textContent = bgAudio.muted ? 'Unmute' : 'Mute';
-    });
-    document.getElementById('close-overlay').addEventListener('click', () => {
-        document.body.removeChild(overlay);
-    });
-}
+
 
 
