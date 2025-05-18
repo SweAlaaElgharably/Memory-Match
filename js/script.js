@@ -338,7 +338,16 @@ let currentLevel = {
 };
 //galal
 function renderPage(columns, height, imageArr) {
-  console.log(container[0]);
+  // Remove old moves and timer displays if they exist
+  if (movesDisplay) {
+    movesDisplay.remove();
+    movesDisplay = null;
+  }
+  if (timerDisplay) {
+    timerDisplay.remove();
+    timerDisplay = null;
+  }
+
   if (!container[0]) return;
   container[0].innerHTML = "";
   container[0].style = "";
@@ -360,29 +369,43 @@ function renderPage(columns, height, imageArr) {
   resetTimer();
   startTimer();
 
-  // Create restart button
-  if (!restartBtn) {
-    restartBtn = document.createElement("button");
-    restartBtn.className = "main-menu-btn restart-game-btn";
-    restartBtn.textContent = "Restart Level";
-    restartBtn.style.cssText = `
-            position: fixed;
-            bottom: 750px;
-            left: 20px;
-            z-index: 1000;
-        `;
-    document.body.appendChild(restartBtn);
-
-    restartBtn.addEventListener("click", () => {
-      resetTimer();
-      startTimer();
-      renderPage(
-        currentLevel.columns,
-        currentLevel.height,
-        currentLevel.images
-      );
-    });
+  // Remove old restart button if it exists
+  if (restartBtn) {
+    restartBtn.remove();
+    restartBtn = null;
   }
+
+  // Always create a new restart button
+  restartBtn = document.createElement("button");
+  restartBtn.className = "main-menu-btn restart-game-btn";
+  restartBtn.textContent = "Restart Level";
+  restartBtn.style.cssText = `
+          position: fixed;
+          bottom: 750px;
+          left: 20px;
+          z-index: 1000;
+      `;
+  document.body.appendChild(restartBtn);
+
+  restartBtn.addEventListener("click", () => {
+    // Remove displays before restarting
+    if (movesDisplay) {
+      movesDisplay.remove();
+      movesDisplay = null;
+    }
+    if (timerDisplay) {
+      timerDisplay.remove();
+      timerDisplay = null;
+    }
+    resetTimer();
+    startTimer();
+    renderPage(
+      currentLevel.columns,
+      currentLevel.height,
+      currentLevel.images
+    );
+  });
+
   //galal
   const section = document.createElement("section");
   section.className = "parent";
