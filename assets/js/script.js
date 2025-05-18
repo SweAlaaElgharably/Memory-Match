@@ -1,4 +1,5 @@
 import showSoundOverlay from "./sound.js";
+import { showLeaderBoard, saveScore } from "./leaderboard.js";
 
 // global variables
 const flipAudio = new Audio('./assets/audio/flip-audio.wav');
@@ -10,8 +11,8 @@ let canFlip = true;
 let gameTimer;
 let seconds = 0;
 let minutes = 0;
-let totalCards = 0;
 let matchedPairs = 0;
+let level = "difficult";
 let currentLevel = {columns: 0, height: 0, images: []};
 var cardsImages = [
     "./assets/images/altron.jpg",
@@ -56,9 +57,8 @@ function mainmenu() {
             <button class="main-menu-btn sound">Sound</button>
             <button class="main-menu-btn">Background</button>
             <button class="main-menu-btn">About</button>
-            <button class="main-menu-btn">Leaderboard</button>
-        </menu>
-        `);
+            <button class="main-menu-btn leaderboard">Leaderboard</button>
+        </menu>`);
 }
 mainmenu();
 
@@ -70,11 +70,11 @@ function startgamemenu() {
             <button class="main-menu-btn render-page">Normal</button>
             <button class="main-menu-btn render-page">Difficult</button>
             <button class="main-menu-btn back">Back</button>
-        </menu>
-    `);
+        </menu>`);
 }
 $(".game").on("click", ".start-game", startgamemenu);
 $(".game").on("click", ".back", mainmenu);
+$(".game").on("click", ".leaderboard", showLeaderBoard);
 
 // game page function
 function gamePage() {
@@ -92,23 +92,19 @@ function gamePage() {
         startTimer();
         renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
     });
-    $(".back-to-menu").on("click", () => {
-        mainmenu();
-    });
-    $(".back-to-level").on("click", () => {
-        startgamemenu();
-    })
-    const buttonText = $(this).text();
+    $(".back-to-menu").on("click", () => mainmenu());
+    $(".back-to-level").on("click", () => startgamemenu());
+    level = $(this).text();
     let columns, height, imageParameter;
-    if (buttonText === "Easy") {
+    if (level === "Easy") {
         columns = 4;
         height = 140;
         imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 8);
-    } else if (buttonText === "Normal") {
+    } else if (level === "Normal") {
         columns = 6;
         height = 120;
         imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 18);
-    } else if (buttonText === "Difficult") {
+    } else if (level === "Difficult") {
         columns = 8;
         height = 80;
         imageParameter = cardsImages;
@@ -118,10 +114,6 @@ function gamePage() {
 }
 $(".game").on("click", ".render-page", gamePage);
 
-// moves function
-function updateMoves() {
-    $(".moves-display").text(`Moves: ${moves}`);
-}
 // Function to update and display the timer
 function updateTimer() {
     $(".timer-display").text(`Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
@@ -149,6 +141,8 @@ function resetTimer() {
 
 // Function to show game completion notification
 function showGameCompletion() {
+    console.log(level);
+    saveScore(moves, $(".timer-display").text(), level);
     const notification = document.createElement('div');
     notification.className = 'game-completion';
     notification.innerHTML = `
@@ -182,8 +176,7 @@ function renderPage(columns, height, imageArr) {
     moves = 0;
     flippedCards = [];
     matchedPairs = 0;
-    totalCards = imageArr.length;
-    updateMoves();
+    $(".moves-display").text(`Moves: ${moves}`);
     resetTimer();
     startTimer();
     // cards section
@@ -215,7 +208,7 @@ function renderPage(columns, height, imageArr) {
             if (flippedCards.length === 2) {
                 canFlip = false;
                 moves++; // Increment moves counter when two cards are flipped
-                updateMoves(); // Update moves display
+                $(".moves-display").text(`Moves: ${moves}`); // Update moves display
                 const [card1, card2] = flippedCards;
                 if (card1.dataset.image === card2.dataset.image) {
                     // Match found
