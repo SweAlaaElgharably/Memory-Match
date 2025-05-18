@@ -7,6 +7,10 @@ let minutes = 0;
 let isGameActive = false;
 let totalCards = 0;
 let matchedPairs = 0;
+let moves = 0;
+let flippedCards = [];
+let canFlip = true;
+
 const bgAudio = new Audio("./assets/audio/The Avengers Theme Song.mp3");
 const flipAudio = new Audio("./assets/audio/flip-audio.wav");
 var container = document.getElementsByClassName("game");
@@ -179,23 +183,17 @@ $(".game").on("click", ".render-page", function () {
   });
 
   const buttonText = $(this).text();
-  let columns, height, imageParameter;
-  if (buttonText === "Easy") {
-    columns = 4;
-    height = 140;
+  let imageParameter;
+  if (buttonText === "Easy") { 
     imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 8);
   } else if (buttonText === "Normal") {
-    columns = 6;
-    height = 120;
     imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 18);
   } else if (buttonText === "Difficult") {
-    columns = 8;
-    height = 80;
     imageParameter = cardsImages;
   }
 
   // Render the game
-  renderPage(columns, height, imageParameter);
+  renderPage(buttonText, imageParameter);
 });
 
 //$(".background").attr("src", "#");
@@ -204,9 +202,6 @@ $(".game").on("click", ".render-page", function () {
 
 //score and flip card function
 // Add these variables at the top of your file, after your existing variables
-let moves = 0;
-let flippedCards = [];
-let canFlip = true;
 
 // Add this function to update and display the moves
 function updateMoves() {
@@ -337,7 +332,7 @@ let currentLevel = {
   images: [],
 };
 //galal
-function renderPage(columns, height, imageArr) {
+function renderPage(difficulty, imageArr) {
   console.log(container[0]);
   if (!container[0]) return;
   container[0].innerHTML = "";
@@ -346,8 +341,7 @@ function renderPage(columns, height, imageArr) {
   //galal
   // Store current level info
   currentLevel = {
-    columns: columns,
-    height: height,
+   difficult: difficulty,
     images: imageArr,
   };
 
@@ -374,36 +368,42 @@ function renderPage(columns, height, imageArr) {
     document.body.appendChild(restartBtn);
 
     restartBtn.addEventListener("click", () => {
-      resetTimer();
-      startTimer();
-      renderPage(
-        currentLevel.columns,
-        currentLevel.height,
-        currentLevel.images
-      );
+        renderPage(
+           
+            currentLevel.difficult,
+            currentLevel.images
+        );
+        resetTimer();
+        startTimer();
     });
   }
   //galal
   const section = document.createElement("section");
-  section.className = "parent";
-  section.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+   section.className = `parent-${difficulty}`;
 
   const allImages = [...imageArr, ...imageArr].sort(() => Math.random() - 0.5);
 
   allImages.forEach((image) => {
     const div = document.createElement("div");
-    div.className = "card";
-    div.style.height = `${height}px`;
+    div.className = `card-${difficulty}`;
     div.dataset.image = image; // Store the image path in a data attribute
 
     const front = document.createElement("div");
     front.className = "card-front";
-    front.style = `width: 100%; height: 100%; background: url(${backgroundImage}) no-repeat center/cover;`;
-
-    const back = document.createElement("div");
-    back.className = "card-back";
-    back.style = `width: 100%; height: 100%; background: url(${image}) no-repeat center/cover;`;
-
+    // front.style = `width: 100%; height: 100%; background: url(${backgroundImage}) no-repeat center/cover;`;
+  const frontImg = document.createElement('img')
+        frontImg.setAttribute("src" , `${backgroundImage}` )
+        frontImg.className='front-img'
+        front.appendChild(frontImg)
+   
+    const back = document.createElement('div');
+        back.className = 'card-back';
+        // back.style = width: 100%; height: 100%; background: url(${image}) no-repeat center/cover;;
+        //  ======================
+        const backImg = document.createElement('img')
+        backImg.setAttribute("src" , `${image}` )
+        backImg.className='back-img'
+        back.appendChild(backImg)
     // Add the front and back to the card
     div.appendChild(front);
     div.appendChild(back);
