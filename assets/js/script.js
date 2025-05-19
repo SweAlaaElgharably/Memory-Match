@@ -3,8 +3,16 @@ import showSoundOverlay from "./sound.js";
 import { showLeaderBoard, saveScore } from "./leaderboard.js";
 import { changeBG } from "./background.js";
 
+
 // global variables
-const flipAudio = new Audio('./assets/audio/flip-audio.wav');
+
+// all sounds
+const sounds = {
+  correct: new Audio("./assets/audio/right-sound.wav"),
+  wrong: new Audio("./assets/audio/wrong-sound.mp3"),
+  flip: new Audio("./assets/audio/flip-audio.wav"),
+  completion: new Audio("./assets/audio/completion-sound.wav"),
+};
 var container = document.getElementsByClassName("game-body");
 var backgroundImage = "./assets/images/marvel-back.jpeg";
 let moves = 0;
@@ -15,7 +23,7 @@ let seconds = 0;
 let minutes = 0;
 let matchedPairs = 0;
 let level = "difficult";
-let currentLevel = {columns: 0, height: 0, images: []};
+let currentLevel = {lvl: String, images: []};
 var cardsImages = [
     "./assets/images/altron.jpg",
     "./assets/images/blackwidow.jpg",
@@ -70,27 +78,22 @@ function gamePage() {
     $(".restart-btn").on("click", function () {
         resetTimer();
         startTimer();
-        renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
+        renderPage(currentLevel.lvl, currentLevel.images);
     });
     $(".back-to-menu").on("click", () => mainmenu());
     $(".back-to-level").on("click", () => startgamemenu());
     level = $(this).text();
-    let columns, height, imageParameter;
+    let  imageParameter;
     if (level === "Easy") {
-        columns = 4;
-        height = 140;
+        
         imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 8);
     } else if (level === "Normal") {
-        columns = 6;
-        height = 120;
         imageParameter = cardsImages.sort(() => Math.random() - 0.5).slice(0, 18);
     } else if (level === "Difficult") {
-        columns = 8;
-        height = 80;
         imageParameter = cardsImages;
     }
     // Render the game
-    renderPage(columns, height, imageParameter);
+    renderPage(level, imageParameter);
 }
 $(".game").on("click", ".render-page", gamePage);
 
@@ -137,7 +140,7 @@ function showGameCompletion() {
         notification.remove();
         resetTimer();
         startTimer();
-        renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
+        renderPage(currentLevel.lvl, currentLevel.images);
     });
     notification.querySelector('.menu-btn').addEventListener('click', () => {
         notification.remove();
@@ -147,10 +150,10 @@ function showGameCompletion() {
 }
 
 // game render page
-function renderPage(columns, height, imageArr) {
+function renderPage(level, imageArr) {
     if (!container[0]) return;
     $(container[0]).html('');
-    currentLevel = {columns: columns, height: height, images: imageArr};
+    currentLevel = {lvl: level, images: imageArr};
     // Reset game state
     moves = 0;
     flippedCards = [];
@@ -159,30 +162,38 @@ function renderPage(columns, height, imageArr) {
     resetTimer();
     startTimer();
     // cards section
-    const section = document.createElement('section');
-    section.className = 'parent';
-    section.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+   const section = document.createElement("section");
+   section.className = `parent-${level}`;
     const allImages = [...imageArr, ...imageArr,].sort(() => Math.random() - 0.5);
     allImages.forEach(image => {
         const div = document.createElement('div');
-        div.className = 'card';
-        div.style.height = `${height}px`;
-        div.dataset.image = image; // Store the image path in a data attribute
-        const front = document.createElement('div');
-        front.className = 'card-front';
-        front.style = `width: 100%; height: 100%; background: url(${backgroundImage}) no-repeat center/cover;`;
+        div.className = `card-${level}`;
+       
+        div.dataset.image = image; 
+         const front = document.createElement("div");
+        front.className = "card-front";
+        const frontImg = document.createElement('img')
+        frontImg.setAttribute("src" , `${backgroundImage}` )
+        frontImg.className='front-img'
+        front.appendChild(frontImg)
+
+
         const back = document.createElement('div');
         back.className = 'card-back';
-        back.style = `width: 100%; height: 100%; background: url(${image}) no-repeat center/cover;`;
-        // Add the front and back to the card
+        const backImg = document.createElement('img')
+        backImg.setAttribute("src" , `${image}` )
+        backImg.className='back-img'
+        back.appendChild(backImg)
+
+               // Add the front and back to the card
         div.appendChild(front);
         div.appendChild(back);
         // Modified click event for card flipping and matching
         div.addEventListener('click', function () {
             if (!canFlip || div.classList.contains('flipped') || div.classList.contains('matched')) return;
             div.classList.add('flipped');
-            flipAudio.currentTime = 0;
-            flipAudio.play();
+           sounds.flip.currentTime = 0;
+            sounds.flip.play();
             flippedCards.push(div);
             if (flippedCards.length === 2) {
                 canFlip = false;
@@ -197,10 +208,15 @@ function renderPage(columns, height, imageArr) {
                         matchedPairs++;
                         flippedCards = [];
                         canFlip = true;
+                        sounds.correct.currentTime = 0;
+                        sounds.correct.play();
+
                         // Check if game is complete
                         if (matchedPairs === currentLevel.images.length) {
                             clearInterval(gameTimer);
                             showGameCompletion();
+                            sounds.completion.currentTime = 0;
+                            sounds.completion.play();
                         }
                     }, 500);
                 } else {
@@ -210,6 +226,8 @@ function renderPage(columns, height, imageArr) {
                         card2.classList.remove('flipped');
                         flippedCards = [];
                         canFlip = true;
+                        sounds.wrong.currentTime = 0;
+                        sounds.wrong.play();
                     }, 1000);
                 }
             }
