@@ -3,7 +3,10 @@ import showSoundOverlay from "./sound.js";
 import { showLeaderBoard, saveScore } from "./leaderboard.js";
 import { changeBG } from "./background.js";
 
+
 // global variables
+
+// all sounds
 const sounds = {
   correct: new Audio("./assets/audio/right-sound.wav"),
   wrong: new Audio("./assets/audio/wrong-sound.mp3"),
