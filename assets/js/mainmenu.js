@@ -1,6 +1,8 @@
 // main menu function 
 export function mainmenu() {
     $(".game").html(`
+        <h1>M A R V E L</h1>
+        <h2>Memory Matching Game</h2>
         <menu class="main-menu">
             <button class="main-menu-btn start-game">Start Game</button>
             <button class="main-menu-btn sound">Sound</button>
