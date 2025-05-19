@@ -9,7 +9,6 @@ body {
     background-image: url("../images/marvel3.jpg");
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
 }
 
 .background {
@@ -32,6 +31,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .main-menu {
@@ -114,6 +114,50 @@ body {
     top: 0;
     border-radius: 10px;
 }
+
+.nav-bar {
+    display: flex;
+}
+
+.back-to-menu, .back-to-level, .moves-display, .timer-display {
+    width: auto;
+}
+
+.game-completion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 2000;
+    min-width: 300px;
+}
+
+table {
+    color: #fff;
+}
+
+tr {
+    padding: 10px 0;
+    display: flex;
+    border-top: 1px solid #fff;
+}
+
+tr:first-child {
+    border-top: 0
+}
+
+th, td {
+    width: 100px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* background styles */
 .main-menu-btn.first-bg  > img ,.main-menu-btn.second-bg  > img,.main-menu-btn.third-bg  > img{
     /* object-fit: contain; */
     width: 100%;
