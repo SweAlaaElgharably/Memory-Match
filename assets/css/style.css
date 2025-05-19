@@ -114,6 +114,7 @@ body {
     top: 0;
     border-radius: 10px;
 }
+
 .main-menu-btn.first-bg  > img ,.main-menu-btn.second-bg  > img,.main-menu-btn.third-bg  > img{
     /* object-fit: contain; */
     width: 100%;
@@ -183,6 +184,7 @@ body {
   box-shadow: 0px 0px var(--main-color);
 }
 
+
 .nav-bar {
     display: flex;
 }
@@ -243,14 +245,15 @@ th, td {
 }
 
 
+
+
+
 .main-menu-btn.first-bg::before ,.main-menu-btn.second-bg::before ,.main-menu-btn.third-bg::before { 
     background: transparent !important;
 }
 .main-menu-btn.first-bg::after , .main-menu-btn.second-bg::after , .main-menu-btn.third-bg::after  { 
+
     background-color: transparent !important;}
-    /* السايد بار */
-
-
-
-
+    
+    background-color: transparent !important;}
 
