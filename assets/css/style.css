@@ -179,3 +179,55 @@ th, td {
 }
 .main-menu-btn.first-bg::after , .main-menu-btn.second-bg::after , .main-menu-btn.third-bg::after  { 
     background-color: transparent !important;}
+
+    .main-menu-btn-sidebar {
+    width: fit-content;
+    margin: 0px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: absolute;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+    .sidebar-btn span {
+      margin-left: 10px;
+      display: none;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar-btn:hover span {
+      display: inline-block;
+    }
+    .restart {
+        top: 260px;
+        z-index: 1000;
+        left: 0;
+
+    }
+    .back-level {
+top: 300px;
+z-index: 1000;
+left: 0;
+    }
+    .back-menu {
+top: 340px;
+z-index: 1000;
+left: 0;
+    }
+    .sound-in-game {
+        top: 380px;
+        z-index: 1000;
+        left: 0;
+    }
