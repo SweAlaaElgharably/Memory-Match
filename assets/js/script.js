@@ -20,7 +20,7 @@ let seconds = 0;
 let minutes = 0;
 let matchedPairs = 0;
 let level = "difficult";
-let currentLevel = {columns: 0, height: 0, images: []};
+let currentLevel = {lvl: String, images: []};
 var cardsImages = [
     "./assets/images/altron.jpg",
     "./assets/images/blackwidow.jpg",
