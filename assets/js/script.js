@@ -137,7 +137,7 @@ function showGameCompletion() {
         notification.remove();
         resetTimer();
         startTimer();
-        renderPage(currentLevel.columns, currentLevel.height, currentLevel.images);
+        renderPage(currentLevel.lvk, currentLevel.images);
     });
     notification.querySelector('.menu-btn').addEventListener('click', () => {
         notification.remove();
