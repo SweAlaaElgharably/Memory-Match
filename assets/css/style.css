@@ -114,24 +114,7 @@ body {
     top: 0;
     border-radius: 10px;
 }
-.main-menu-btn.first-bg  > img ,.main-menu-btn.second-bg  > img,.main-menu-btn.third-bg  > img{
-    /* object-fit: contain; */
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
 
-<<<<<<< HEAD
-}
-.main-menu-btn.first-bg ,.main-menu-btn.second-bg ,.main-menu-btn.third-bg{
-    height: 60px;
-    padding: 0;
-    background-color: transparent !important;
-    position: relative;
-    z-index: 999;
-    color: white;
-}
-
-=======
 .nav-bar {
     display: flex;
 }
@@ -191,13 +174,8 @@ th, td {
     color: white;
 }
 
->>>>>>> alaa
 .main-menu-btn.first-bg::before ,.main-menu-btn.second-bg::before ,.main-menu-btn.third-bg::before { 
     background: transparent !important;
 }
 .main-menu-btn.first-bg::after , .main-menu-btn.second-bg::after , .main-menu-btn.third-bg::after  { 
-<<<<<<< HEAD
     background-color: transparent !important;}
-=======
-    background-color: transparent !important;}
->>>>>>> alaa
