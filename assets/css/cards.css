@@ -229,7 +229,7 @@
 
 
 /* Responsive 4*4  */
-@media (max-width: 1235px) {
+@media (max-width: 1440px) {
     .parent-Easy {
         gap: 6px;
         width: 880px;
