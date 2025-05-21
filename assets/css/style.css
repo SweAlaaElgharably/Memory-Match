@@ -45,74 +45,62 @@ body {
 }
 
 .main-menu-btn {
-    width: 200px;
+    width: 240px;
     margin: 10px;
-    padding: 0.6em 2em;
+    padding: 0.8em 2em;
     border: none;
     outline: none;
-    color: rgb(255, 255, 255);
-    background: #111;
+    color: #fff;
+    background: #0f1923;
     cursor: pointer;
     position: relative;
     z-index: 0;
-    border-radius: 10px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    font-size: 18px;
-    font-weight: bold;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', 'Muli', Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: 2px;
+    overflow: hidden;
+    transition: color 0.2s;
+    box-shadow: 0 0 12px 2px #ff4655, 0 2px 16px 0 #000;
 }
 
 .main-menu-btn:before {
     content: "";
-    background: linear-gradient(
-        45deg,
-        #ff0000,
-        #ff7300,
-        #fffb00,
-        #48ff00,
-        #00ffd5,
-        #002bff,
-        #7a00ff,
-        #ff00c8,
-        #ff0000
-    );
     position: absolute;
-    top: -2px;
-    left: -2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    -webkit-filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing-button-85 20s linear infinite;
-    transition: opacity 0.3s ease-in-out;
-    border-radius: 10px;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(120deg, #ff4655, #0ff, #ff4655, #fff 80%);
+    background-size: 200% 200%;
+    z-index: -2;
+    filter: blur(6px);
+    opacity: 0.7;
+    border-radius: 14px;
+    animation: valorant-glow 2.5s linear infinite;
 }
 
-@keyframes glowing-button-85 {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 400% 0;
-    }
-    100% {
-        background-position: 0 0;
-    }
+@keyframes valorant-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .main-menu-btn:after {
-    z-index: -1;
     content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #222;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0f1923;
+    z-index: -1;
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+.main-menu-btn:hover, .main-menu-btn:focus {
+    color: #ff4655;
+    box-shadow: 0 0 24px 4px #ff4655, 0 2px 24px 0 #000;
+}
+
+.main-menu-btn:hover:after, .main-menu-btn:focus:after {
+    background: linear-gradient(90deg, #ff4655 0%, #0f1923 100%);
 }
 
 .nav-bar {
@@ -179,55 +167,3 @@ th, td {
 }
 .main-menu-btn.first-bg::after , .main-menu-btn.second-bg::after , .main-menu-btn.third-bg::after  { 
     background-color: transparent !important;}
-
-    .main-menu-btn-sidebar {
-    width: fit-content;
-    margin: 0px;
-    padding: 10px 20px;
-    border: none;
-    outline: none;
-    color: rgb(255, 255, 255);
-    background: #111;
-    cursor: pointer;
-    position: absolute;
-    z-index: 0;
-    border-radius: 10px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-
-    .sidebar-btn span {
-      margin-left: 10px;
-      display: none;
-      white-space: nowrap;
-      transition: opacity 0.3s ease;
-    }
-
-    .sidebar-btn:hover span {
-      display: inline-block;
-    }
-    .restart {
-        top: 260px;
-        z-index: 1000;
-        left: 0;
-
-    }
-    .back-level {
-top: 300px;
-z-index: 1000;
-left: 0;
-    }
-    .back-menu {
-top: 340px;
-z-index: 1000;
-left: 0;
-    }
-    .sound-in-game {
-        top: 380px;
-        z-index: 1000;
-        left: 0;
-    }
