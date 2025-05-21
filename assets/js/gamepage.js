@@ -56,7 +56,7 @@ export function gamePage() {
                                   <i class="fas fa-bars"></i>
                                   <span>Back to Menu</span>
                                 </div>
-                                    <div class="sidebar-btn main-menu-btn main-menu-btn-sidebar sound-in-game ">
+                                    <div class="sidebar-btn main-menu-btn main-menu-btn-sidebar sound-in-game sound">
                                   <i class="fas fa-bullhorn"></i>
                                   <span>Sound</span>
                                 </div>
