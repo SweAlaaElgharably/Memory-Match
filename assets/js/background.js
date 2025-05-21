@@ -2,17 +2,20 @@ export function changeBG() {
   $(".game").html(
     `
         <menu class="main-menu">
-            <button class="main-menu-btn bg-function first-bg">
-                <img id="Changeimg" src="./assets/images/marvel3.jpg" alt="">
+        <button class="main-menu-btn bg-function third-bg">
+                <img id="Changeimg" src="./assets/images/marvelbg5.png" alt="">
             </button>
             <button class="main-menu-btn bg-function first-bg">
-                <img id="Changeimg" src="./assets/images/bg.jpg" alt="">
+                <img id="Changeimg" src="./assets/images/marvelbg1.jpg" alt="">
+            </button>
+            <button class="main-menu-btn bg-function first-bg">
+                <img id="Changeimg" src="./assets/images/marvelbg2.jpg" alt="">
             </button>
             <button class="main-menu-btn bg-function second-bg">
-                <img id="Changeimg" src="./assets/images/marvel.jpg" alt="">
+                <img id="Changeimg" src="./assets/images/marvelbg3.jpg" alt="">
             </button>
             <button class="main-menu-btn bg-function third-bg">
-                <img id="Changeimg" src="./assets/images/avengers.jpg" alt="">
+                <img id="Changeimg" src="./assets/images/marvelbg4.jpg" alt="">
             </button>
             <button class="main-menu-btn back">Back</button>
         </menu>

@@ -1,4 +1,4 @@
-import { mainmenu, startgamemenu } from "./mainmenu.js";
+import { aboutOverlay, mainmenu, startgamemenu } from "./mainmenu.js";
 import showSoundOverlay from "./sound.js";
 import { showLeaderBoard } from "./leaderboard.js";
 import { changeBG } from "./background.js";
@@ -16,5 +16,6 @@ $(".game").on("click", ".sound", function () {
 });
 // background call
 $(".game").on("click", ".background-btn", changeBG);
+$(".game").on("click", ".about-btn", aboutOverlay);
 
 

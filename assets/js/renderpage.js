@@ -7,7 +7,7 @@ let matchedPairs = 0;
 let gameTimer;
 let seconds = 0;
 let minutes = 0;
-var backgroundImage = "./assets/images/marvel-back.jpeg";
+var backgroundImage = "./assets/images/marvelCards.jpeg";
 let canFlip = true;
 
 
