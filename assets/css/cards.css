@@ -128,12 +128,50 @@
 }
 
 .sound-controls {
-    background: #fff;
+    background: #0f1923;
+    color: #fff;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
+    font-family: 'Orbitron', 'Muli', Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: 2px;
+    box-shadow: 0 0 12px 2px #ff4655, 0 2px 16px 0 #000;
+    position: relative;
+    overflow: hidden;
+}
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.sound-controls:before {
+    content: "";
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(120deg, #ff4655, #0ff, #ff4655, #fff 80%);
+    background-size: 200% 200%;
+    z-index: -2;
+    filter: blur(6px);
+    opacity: 0.7;
+    border-radius: 14px;
+    animation: valorant-glow 2.5s linear infinite;
+}
+
+.sound-controls:after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0f1923;
+    z-index: -1;
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+/* Optional: Make headings and labels inside .sound-controls match the style */
+.sound-controls h3,
+.sound-controls label,
+.sound-controls span {
+    color: #fff;
+    font-family: inherit;
+    font-weight: 900;
+    letter-spacing: 2px;
 }
 
 .sound-controls h3 {
@@ -156,12 +194,112 @@
     accent-color: rgb(0, 0, 255);
 }
 
+/* Custom range slider for sound controls */
+.sound-controls #volume-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 200px;
+    background: transparent;
+    margin: 20px 0;
+}
+.sound-controls #volume-control:focus {
+    outline-color: #f8b195;
+}
 
+/* Webkit track */
+.sound-controls #volume-control::-webkit-slider-runnable-track {
+    height: 3px;
+    background: linear-gradient(
+        to right,
+        rgba(246, 114, 128, 1) 0%,
+        rgba(192, 108, 132, 1) 50%,
+        rgba(53, 92, 125, 1) 100%
+    );
+    border-radius: 2px;
+}
+.sound-controls #volume-control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 2px solid #f8b195;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    background: #222 url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png") center no-repeat;
+    background-size: 50%;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+    cursor: grab;
+    margin-top: -8.5px; /* Center thumb on track */
+    transition: border 0.2s;
+}
+.sound-controls #volume-control:active::-webkit-slider-thumb {
+    cursor: grabbing;
+}
 
+/* Firefox track */
+.sound-controls #volume-control::-moz-range-track {
+    height: 3px;
+    background: linear-gradient(
+        to right,
+        rgba(246, 114, 128, 1) 0%,
+        rgba(192, 108, 132, 1) 50%,
+        rgba(53, 92, 125, 1) 100%
+    );
+    border-radius: 2px;
+}
+.sound-controls #volume-control::-moz-range-thumb {
+    border: 2px solid #f8b195;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    background: #222 url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png") center no-repeat;
+    background-size: 50%;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+    cursor: grab;
+    transition: border 0.2s;
+}
+.sound-controls #volume-control:active::-moz-range-thumb {
+    cursor: grabbing;
+}
 
+/* IE/Edge track */
+.sound-controls #volume-control::-ms-fill-lower,
+.sound-controls #volume-control::-ms-fill-upper {
+    background: linear-gradient(
+        to right,
+        rgba(246, 114, 128, 1) 0%,
+        rgba(192, 108, 132, 1) 50%,
+        rgba(53, 92, 125, 1) 100%
+    );
+    border-radius: 2px;
+}
+.sound-controls #volume-control::-ms-thumb {
+    border: 2px solid #f8b195;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    background: #222 url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png") center no-repeat;
+    background-size: 50%;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+    cursor: grab;
+    transition: border 0.2s;
+}
+.sound-controls #volume-control:active::-ms-thumb {
+    cursor: grabbing;
+}
 
+/* Remove default styles for IE */
+.sound-controls #volume-control::-ms-tooltip {
+    display: none;
+}
 
-
+/* General track style for all browsers */
+.sound-controls #volume-control {
+    outline: none;
+    height: 20px;
+    /* Remove accent-color if present */
+    accent-color: unset;
+}
 
 .sound-controls button{
     width: 200px;
@@ -418,3 +556,10 @@ gap: 0px;
     }
 } 
     /* Responsive 8*8  */
+
+/* Copy the keyframes if not already present */
+@keyframes valorant-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

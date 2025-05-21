@@ -15,8 +15,8 @@ export default function showSoundOverlay() {
         <div class="sound-controls">
             <h3>Sound Settings</h3>
             <label><span>Volume:</span> <input type="range" id="volume-control" min="0" max="1" step="0.01" value="${bgAudio.volume}"></label>
-            <button id="mute-btn">${bgAudio.muted ? 'Unmute' : 'Mute'}</button>
-            <button id="close-overlay">Close</button>
+            <button id="mute-btn" class="main-menu-btn">${bgAudio.muted ? 'Unmute' : 'Mute'}</button>
+            <button id="close-overlay" class="main-menu-btn">Close</button>
         </div>`;
     $(".container").append(overlay);
     // Add event listeners for the controls
